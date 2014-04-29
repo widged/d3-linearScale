@@ -4,7 +4,6 @@ define(function (require, exports, module) {
     var Bisect        = require('bisect');
     var Interpolate   = require('interpolate');
     var Uninterpolate = require('uninterpolate');
-    var LinearTick    = require('lineartick');
 
     var FN = {};
 

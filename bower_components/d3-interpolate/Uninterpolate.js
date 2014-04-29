@@ -1,7 +1,5 @@
 define(function (require, exports, module) {
 
-    var ColorNames = requirejs("colornames");
-
     var Class = function Uninterpolate() {};
 
 	Class.number = function(a, b) {
