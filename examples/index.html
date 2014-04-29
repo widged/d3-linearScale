@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Kite</title>
+    <script type='text/javascript' src="../bower_components/requirejs/require.js"></script>
+    <script type='text/javascript' src="require-config.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/micropolar.css">
+    <link rel="stylesheet" type="text/css" href="css/nightindale.css">
+    <link rel="stylesheet" type="text/css" href="css/microphone.css">
+    <link rel="stylesheet" type="text/css" href="css/bands.css">
+    <link rel="stylesheet" type="text/css" href="css/flower.css">
+</head>
+<body>
+
+<div id="polar6" class='months'></div>
+<div id="polar7" class='months'></div>
+<div id="polar8" class='months'></div>
+<div id="polar9" class='months flower'></div>
+<div id="carte1" class='months'></div>
+
+<div id="polar1"></div>
+<div id="polar2"></div>
+<div id="polar3"></div>
+<div id="polar4"></div>
+<div id="polar5"></div>
+
+<div id="polar10" class='multi'></div>
+<div id="polar11" class='stacked'></div>
+<div id="polar12" class='bands'></div>
+
+<script>
+
+
+main();
+
+function main() {
+
+  var examples = Examples();
+
+  examples.init(function() {
+    var type = getGraphType();
+    if(type) {
+      examples[type]('#polar6');
+    } else {
+
+      examples.monthArea('#polar6');
+      examples.monthPie('#polar7');
+      examples.monthBar('#polar8');
+      examples.monthFlower('#polar9');
+      examples.monthBarC('#carte1');
+      examples.equationLine('#polar1');
+      examples.dots('#polar2');
+      examples.barChart('#polar3');
+
+      examples.cardinalPie('#polar4');
+      examples.clock('#polar5');    
+
+      examples.microphone('#polar10');
+      examples.nightingale('#polar11');
+      examples.bands('#polar12');
+
+    }
+  });
+}
+
+function getGraphType() {
+  var query = {};
+  window.location.search.substr(1).split('&').map(function(item) { var kv=  item.split('='); query[kv[0]] = kv[1]; })
+  return query.graph;
+}
+
+
+
+function Examples() {
+    var FN= {};
+
+    var PolarPlot, Layer, d3;
+
+    var Class = {};
+
+    Class.init = function(asyncReturn) {
+        requirejs(['polarplot', 'layer', 'd3'], function(_PolarPlot, _Layer, _d3) {
+          PolarPlot = _PolarPlot;
+          d3 = _d3;
+          Layer = _Layer;
+          asyncReturn();
+        });
+    }
+
+    Class.monthArea = function(selector){
+        requirejs(['./polar-chart/Months', 'polararea'], function(PolarMonths, AreaGeom) {
+            var obj;
+            obj = {"jan": 1, "feb": 1, "mar": 0, "apr": 0, "may": 0, "jun": 0, "jul": 0, "aug": 1, "sep": 3, "oct": 5, "nov": 4, "dec": 1};
+            obj = { "jan": 6, "feb": 10, "mar": 12, "apr": 11, "may": 8, "jun": 4, "jul": 4, "aug": 7, "sep": 12, "oct": 13, "nov": 12, "dec": 8 };
+            var layer = (new Layer()).id('months-area').geom(AreaGeom).data(PolarMonths.mapToData(obj))
+            PolarMonths.plot().mountIn(document.querySelector(selector)).addLayer(layer).draw();
+        });
+    }
+
+    Class.monthPie = function(selector){
+        requirejs(['./polar-chart/Months', 'polarpie'], function(PolarMonths, PieGeom) {
+            var obj;
+            obj = {"jan": 1, "feb": 1, "mar": 0, "apr": 0, "may": 0, "jun": 0, "jul": 0, "aug": 1, "sep": 3, "oct": 5, "nov": 4, "dec": 1};
+            obj = { "jan": 6, "feb": 10, "mar": 12, "apr": 11, "may": 8, "jun": 4, "jul": 4, "aug": 7, "sep": 12, "oct": 13, "nov": 12, "dec": 8 };
+
+            var layer = (new Layer()).id('months-pie').geom(PieGeom).data(PolarMonths.mapToData(obj))
+            PolarMonths.plot().mountIn(document.querySelector(selector)).addLayer(layer).draw();
+
+        });
+    }
+
+    Class.monthBar = function(selector){
+        console.log('monthBar', selector)
+        requirejs(['./polar-chart/Months', 'polarbar'], function(PolarMonths, BarGeom) {
+            var obj;
+            obj = {"jan": 1, "feb": 1, "mar": 0, "apr": 0, "may": 0, "jun": 0, "jul": 0, "aug": 1, "sep": 3, "oct": 5, "nov": 4, "dec": 1};
+            obj = { "jan": 6, "feb": 10, "mar": 12, "apr": 11, "may": 8, "jun": 4, "jul": 4, "aug": 7, "sep": 12, "oct": 13, "nov": 12, "dec": 8 };
+            var layer = (new Layer()).id('months-bar').geom(BarGeom).data(PolarMonths.mapToData(obj))
+            PolarMonths.plot().mountIn(document.querySelector(selector)).layers([layer]);
+        });
+    }
+
+    Class.monthBarC = function(selector){
+        requirejs(['cartesianplot', './cartesian-chart/Months', 'cartesianbar'], function(CartesianPlot, CartesianMonths, BarGeom) {
+            var obj;
+            obj = {"jan": 1, "feb": 1, "mar": 0, "apr": 0, "may": 0, "jun": 0, "jul": 0, "aug": 1, "sep": 3, "oct": 5, "nov": 4, "dec": 1};
+            obj = { "jan": 6, "feb": 10, "mar": 12, "apr": 11, "may": 8, "jun": 4, "jul": 4, "aug": 7, "sep": 12, "oct": 13, "nov": 12, "dec": 8 };
+
+            var layer = (new Layer()).id('carte-bar').geom(BarGeom).data(CartesianMonths.mapToData(obj))
+            CartesianMonths.plot().mountIn(document.querySelector(selector)).layers([layer]);
+        });
+    }
+
+    Class.monthFlower = function(selector){
+        requirejs(['./polar-chart/Months', 'polarflower'], function(PolarMonths, FlowerGeom) {
+            var obj;
+            obj = {"jan": 1, "feb": 1, "mar": 0, "apr": 0, "may": 0, "jun": 0, "jul": 0, "aug": 1, "sep": 3, "oct": 5, "nov": 4, "dec": 1};
+            obj = { "jan": 6, "feb": 10, "mar": 12, "apr": 11, "may": 8, "jun": 4, "jul": 4, "aug": 7, "sep": 12, "oct": 13, "nov": 12, "dec": 8 };
+
+            var layer = (new Layer()).id('months-flower').geom(FlowerGeom).data(PolarMonths.mapToData(obj))
+            PolarMonths.preset.aesthetics.radial.coord = { domain : [0, 14], range: [0, 1] };
+            PolarMonths.plot().aesthetics(PolarMonths.preset.aesthetics).mountIn(document.querySelector(selector)).layers([layer]);
+        });
+    }
+
+    Class.cardinalPie = function(selector){
+        requirejs(['./polar-chart/NESW', 'polarpie'], function(PolarNESW, PieGeom) {
+            var data = PolarNESW.applyFunction(function(deg, index){
+                return [deg * 50 + 50, ~~(Math.random() * 10 + 5)];
+            });
+            var layer = (new Layer()).id('cardinal-pie').geom(PieGeom).data(data)
+            PolarNESW.plot().mountIn(document.querySelector(selector)).layers([layer]);
+        });
+    };    
+
+    Class.barChart = function(selector){
+        requirejs(['./polar-chart/Bars', 'polarbar'], function(PolarBar, BarGeom) {
+            var data = d3.range(0, 15).map(function(deg, index){
+                var obj = [deg * 50 + 50, ~~(Math.random() * index * 5 - 15)];
+                return obj;
+            });
+            var layer = (new Layer()).id('polar-bar').geom(BarGeom).data(data)
+            PolarBar.plot().mountIn(document.querySelector(selector)).layers([layer]);
+        });
+
+    };
+
+    Class.dots = function(selector){
+        requirejs(['./polar-chart/Dots', 'polardot'], function(PolarDot, DotGeom) {
+            // var scaleRandom = d3.scale.linear().domain([-3, 3]).range([0, 1]);
+            // var data = d3.range(0, 100).map(function(deg, index) {
+            //    return [~~(scaleRandom(FN.rndSnd()) * 1000), ~~(scaleRandom(FN.rndSnd()) * 100)];
+            //});
+          var data = [[669,79],[335,73],[504,56],[347,69],[237,35],[435,45],[387,55],[640,35],[311,74],[461,35],[325,69],[411,41],[443,40],[94,53],[540,40],[416,70],[382,62],[682,36],[473,21],[795,18],[407,57],[569,31],[429,65],[540,43],[351,41],[450,29],[482,58],[982,50],[402,55],[547,55],[367,49],[480,40],[423,37],[572,9],[567,37],[459,78],[481,61],[534,51],[417,27],[453,52],[273,12],[594,63],[564,33],[431,72],[852,74],[473,31],[657,38],[629,44],[699,61],[282,50],[800,60],[485,94],[488,38],[244,50],[131,35],[566,43],[635,73],[738,36],[615,54],[568,53],[553,65],[655,49],[886,40],[510,77],[751,66],[461,64],[308,64],[814,62],[608,82],[656,53],[360,52],[391,20],[589,44],[476,14],[590,54],[499,68],[567,54],[456,61],[452,20],[496,35],[404,35],[651,64],[497,85],[566,43],[608,59],[544,56],[553,43],[526,66],[567,74],[531,69],[692,46],[511,60],[557,31],[428,56],[634,68],[279,51],[540,51],[691,46],[575,79],[542,53]];
+
+          var layer = (new Layer()).id('dots').geom(DotGeom).data(data);
+          PolarDot.plot()
+            .mountIn(document.querySelector(selector))
+            .layers([layer]);
+        });
+
+    };
+
+    Class.equationLine = function(selector){
+      // Archimedean spiral
+      /*
+      Expected data: [[0,0],[30,0.083],[60,0.167],[90,0.25],[120,0.333],[150,0.417],[180,0.5],[210,0.583],[240,0.667],[270,0.75],[300,0.833],[330,0.917],[360,1],[390,1.083],[420,1.167],[450,1.25],[480,1.333],[510,1.417],[540,1.5],[570,1.583],[600,1.667],[630,1.75],[660,1.833],[690,1.917],[720,2]]
+      */
+        requirejs(['./polar-chart/Line', 'polarline'], function(PolarLine, LineGeom) {
+            var data = d3.range(0, 721, 1).map(function(deg, index){ return [deg, index/720*2]; });
+
+            var layer = (new Layer()).id('snail').geom(LineGeom).data(data);
+            PolarLine.plot().mountIn(document.querySelector(selector)).layers([layer]);
+        });
+    };
+
+    Class.clock = function(selector) {
+        requirejs(['./polar-chart/Clock'], function(PolarClock) {
+            var   data = [0, 4, 8];
+            var layer = (new Layer()).id('clock').geom(PolarClock.geom).data(data);
+            PolarClock.plot().mountIn(document.querySelector(selector)).layers([layer]);
+        });
+    };
+
+
+    Class.nightingale = function(selector) {
+        requirejs(['./polar-chart/StackedMonths', 'polarpie'], function(PolarStackedMonths, PieGeom) {
+            var data = [
+              [ "Apr 1854", 1.4, "Disease"],
+              [ "May 1854", 6.2, "Disease"],
+              [ "Jun 1854", 4.7, "Disease"],
+              [ "Jul 1854", 150, "Disease"],
+              [ "Aug 1854", 328.5, "Disease"],
+              [ "Sep 1854", 312.2, "Disease"],
+              [ "Oct 1854", 197, "Disease"],
+              [ "Nov 1854", 340.6, "Disease"],
+              [ "Dec 1854", 631.5, "Disease"],
+              [ "Jan 1855", 1022.8, "Disease"],
+              [ "Feb 1855", 822.8, "Disease"],
+              [ "Mar 1855", 480.3, "Disease"],
+              [ "Apr 1854", 0, "Wounds"],
+              [ "May 1854", 0, "Wounds"],
+              [ "Jun 1854", 0, "Wounds"],
+              [ "Jul 1854", 0, "Wounds"],
+              [ "Aug 1854", 0.4, "Wounds"],
+              [ "Sep 1854", 32.1, "Wounds"],
+              [ "Oct 1854", 51.7, "Wounds"],
+              [ "Nov 1854", 115.8, "Wounds"],
+              [ "Dec 1854", 41.7, "Wounds"],
+              [ "Jan 1855", 30.7, "Wounds"],
+              [ "Feb 1855", 16.3, "Wounds"],
+              [ "Mar 1855", 12.8, "Wounds"],
+              [ "Apr 1854", 7, "Other"],
+              [ "May 1854", 4.6, "Other"],
+              [ "Jun 1854", 2.5, "Other"],
+              [ "Jul 1854", 9.6, "Other"],
+              [ "Aug 1854", 11.9, "Other"],
+              [ "Sep 1854", 27.7, "Other"],
+              [ "Oct 1854", 50.1, "Other"],
+              [ "Nov 1854", 42.8, "Other"],
+              [ "Dec 1854", 48, "Other"],
+              [ "Jan 1855", 120, "Other"],
+              [ "Feb 1855", 140.1, "Other"],
+              [ "Mar 1855", 68.6, "Other"]
+            ];
+            function getCategory(item) { return item[2]; }
+            function getData(item) { return item[1]; }
+
+            var layers = PolarStackedMonths.stackedSeriesFromTable(data, getData, getCategory, {factory: PieGeom});
+            PolarStackedMonths.plot().mountIn(document.querySelector(selector)).layers(layers);
+        });
+    };
+
+    Class.microphone = function(selector){
+        requirejs(['./polar-chart/Multiline', 'polarline'], function(PolarMultiline, LineGeom) {
+            var equation0 = { fn: function(theta) { return Math.abs(Math.cos(theta)); }, className: 'figure8', factory: LineGeom};
+            var equation1 = { fn: function(theta) { return Math.abs(0.5 + 0.5 * Math.cos(theta)); }, className: 'cardioid', factory: LineGeom};
+            var equation2 = { fn: function(theta) { return Math.abs(0.25 + 0.75 * Math.cos(theta)); }, className: 'hypercardioid', factory: LineGeom};
+            var equation3 = { fn: function(theta) { return Math.abs(0.7 + 0.3 * Math.cos(theta)); }, className: 'subcardioid', factory: LineGeom};
+            var equation4 = { fn: function(theta) { return Math.abs(0.37 + 0.63 * Math.cos(theta)); }, className: 'supercardioid', factory: LineGeom};
+            var layers = [equation0,equation1,equation2,equation3,equation4].map(PolarMultiline.deriveSerieData);
+            PolarMultiline.plot().mountIn(document.querySelector(selector)).layers(layers);
+        });
+    };
+
+    Class.bands = function(selector) {
+        requirejs(['./polar-chart/Bands', 'polarband'], function(PolarBand, BandGeom) {
+            var data = [[1,4],[2,8],[3,7]];
+            var layer = (new Layer()).id('bands').geom(BandGeom).data(data);
+            PolarBand.plot().mountIn(document.querySelector(selector)).layers([layer]);
+        });
+    };
+
+
+
+    FN.rndSnd = function() {
+        return (Math.random()*2-1)+(Math.random()*2-1)+(Math.random()*2-1);
+    };    
+  return Class;
+}
+
+</script>
+</body>
+</html>

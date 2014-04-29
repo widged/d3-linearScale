@@ -1,0 +1,27 @@
+{
+  "name": "d3-scale-test",
+  "version": "0.1.1",
+  "description": "Unit tests for the d3-scale library",
+  "keywords": [],
+  "author": {
+    "name": "Marielle Lange",
+    "url": "http://www.widged.com"
+  },
+  "main": "test.js",
+  "engines": {
+    "node": ">= 0.2.0"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "dependencies": {
+    "requirejs": "latest",
+    "assert": "~1.1.1"
+  },
+  "bundledDependencies": [],
+  "devDependencies": {
+    "requirejs": "~2.1.11",
+    "assert": "~1.1.1",
+    "should": "~3.2.0-beta1"
+  }
+}
