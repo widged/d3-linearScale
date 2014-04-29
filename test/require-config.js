@@ -2,7 +2,6 @@ define({
     baseUrl: './',
     nodeRequire: require,
     paths: {
-        'scale.util'           : '../Util',
         'scale.linear'         : '../Linear',
         'scale.ordinal'        : '../Ordinal',
 
@@ -19,6 +18,7 @@ define({
         'color.hcl'          : '../bower_components/d3-color/hcl',
         'color.xyz'          : '../bower_components/d3-color/xyz',
         'color.names'        : '../bower_components/d3-color/ColorNames',
+        'extent'             : '../bower_components/d3-extent/Extent',
         interpolate          : '../bower_components/d3-interpolate/Interpolate',
         uninterpolate        : '../bower_components/d3-interpolate/Uninterpolate'
     }

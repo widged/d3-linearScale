@@ -1,6 +1,6 @@
 define(function (require, exports, module) {
 
-    var Class = function ScaleUtil() {};
+    var Class = function Extent() {};
 
     Class.identity = function(x) { return x; };
 

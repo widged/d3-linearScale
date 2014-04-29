@@ -5,7 +5,6 @@ requirejs.config({
     baseUrl: './',
     urlArgs: "bust=v239", // use this to force a reload of all js files
     paths: {
-        'scale.util'           : '../Util',
         'scale.linear'         : '../Linear',
         'scale.ordinal'        : '../Ordinal',
 
@@ -22,6 +21,7 @@ requirejs.config({
         'color.hcl'          : '../bower_components/d3-color/hcl',
         'color.xyz'          : '../bower_components/d3-color/xyz',
         'color.names'        : '../bower_components/d3-color/ColorNames',
+        'extent'             : '../bower_components/d3-extent/Extent',
         interpolate          : '../bower_components/d3-interpolate/Interpolate',
         uninterpolate        : '../bower_components/d3-interpolate/Uninterpolate'
     }
