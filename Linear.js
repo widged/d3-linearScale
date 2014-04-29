@@ -47,21 +47,6 @@ define(function (require, exports, module) {
         return instance.range(x).interpolate(Interpolate.round);
       };
 
-/*
-      instance.ticks = function(m) {
-        return LinearTicks.mark(state.domain, m);
-      };
-
-      instance.tickFormat = function(m, format) {
-        return LinearTicks.markFormat(state.domain, m, format);
-      };
-
-      instance.nice = function(m) {
-        var domain = Class.linearNice(state.domain, m);
-        instance.domain(domain);
-        return instance();
-      };
-*/
 
       instance.copy = function() {
         return (new Class()).domain(state.domain).range(state.range).interpolate(state.interpolate).clamp(state.clamp);
@@ -72,11 +57,6 @@ define(function (require, exports, module) {
       return instance;
     };
 
-
-    Class.linearNice = function(domain, m) {
-        Scale.nice(domain, Scale.niceStep(LinearTicks.tickRange(domain, m)[2]));
-        return domain;
-    };
 
     FN.isPoly = function(domain, range) {
         return Math.min(domain.length, range.length) > 2;

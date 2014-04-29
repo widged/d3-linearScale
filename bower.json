@@ -1,7 +1,7 @@
 {
-    "name": "D3-scale",
+    "name": "D3-linearScale",
     "version": "1.0.0",
-    "description" : "Rewrite of d3.scale to work as module",
+    "description" : "Rewrite of d3.scale.linear to work as an independent module",
 	"keywords": [
 	    "d3", 
 	    "scale", 
@@ -16,6 +16,10 @@
 	    "url": "git://path/to/project.git"
 	  },
     "bundledDependencies": {
-    	"access-maker"
+    	"access-maker",
+    	"d3-array",
+    	"d3-color",
+    	"d3-extent",
+    	"d3-interpolate"
     }
 }

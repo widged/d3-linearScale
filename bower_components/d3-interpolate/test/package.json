@@ -1,7 +1,7 @@
 {
-  "name": "d3-scale-test",
+  "name": "d3-interpolate-test",
   "version": "0.1.1",
-  "description": "Unit tests for the d3-scale library",
+  "description": "Unit tests for the d3-interpolate library",
   "keywords": [],
   "author": {
     "name": "Marielle Lange",
@@ -12,11 +12,16 @@
     "node": ">= 0.2.0"
   },
   "scripts": {
-    "test": "mocha units/LinearSuite.js"
+    "test": "mocha"
+  },
+  "dependencies": {
+    "requirejs": "latest",
+    "assert": "~1.1.1"
   },
   "bundledDependencies": [],
   "devDependencies": {
     "requirejs": "~2.1.11",
-    "assert": "~1.1.1"
+    "assert": "~1.1.1",
+    "should": "~3.2.0-beta1"
   }
 }

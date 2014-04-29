@@ -1,0 +1,25 @@
+{
+    "name": "Polar D3",
+    "version": "1.0.2",
+    "description" : "Polar Charts wth d3js",
+	"keywords": [
+	    "polar", 
+	    "radial", 
+	    "chart"
+	    "visualisation",
+	    "component",
+	    "d3"
+	  ],
+	"author": {
+		"name" : "Marielle Lange",
+		"web"  : "http://www.widged.com"
+	},    
+	"repository": {
+	    "type": "git",
+	    "url": "git://path/to/project.git"
+	  },
+    "dependencies": {
+    	"d3": "3.4.3",
+    	"requirejs": "latest"
+    }
+}
